@@ -62,6 +62,8 @@ get '/details/:post_id' do
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	#Вибираємо цей один пост а змінну @row
 	@row = results[0]
+	#Вибираємо коментарі для нашого поста
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
 	#Вертаємо вигляд ERB
 	erb :details
 end
