@@ -8,11 +8,19 @@ def init_db
 	@db.results_as_hash = true
 end
 
-def c_ctable
+def creat_posts_table
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts (
 		id INTEGER PRIMARY KEY AUTOINCREMENT, 
 		created_date DATE, 
 		content TEXT);'
+end
+
+def creat_comments_table
+	@db.execute 'CREATE TABLE IF NOT EXISTS Comments (
+		id INTEGER PRIMARY KEY AUTOINCREMENT, 
+		created_date DATE, 
+		content TEXT,
+		post_id integer);'
 end
 
 before do
@@ -21,7 +29,8 @@ end
 
 configure do
 	init_db
-	c_ctable
+	creat_posts_table
+	creat_comments_table
 end
 
 get '/' do
