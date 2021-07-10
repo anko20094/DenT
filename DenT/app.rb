@@ -47,8 +47,12 @@ post '/new' do
 end
 
 get '/details/:post_id' do
+	#Отримуємо змінну з URL-a
 	post_id = params[:post_id]
+	#Отримуємо список постів(в нас буде лише один пост)
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
+	#Вибираємо цей один пост а змінну @row
 	@row = results[0]
+	#Вертаємо вигляд ERB
 	erb :details
 end
