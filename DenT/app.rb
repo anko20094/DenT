@@ -12,7 +12,8 @@ def creat_posts_table
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts (
 		id INTEGER PRIMARY KEY AUTOINCREMENT, 
 		created_date DATE, 
-		content TEXT);'
+		content TEXT,
+		author TEXT);'
 end
 
 def creat_comments_table
@@ -45,13 +46,14 @@ end
 
 post '/new' do
 	content = params[:content]
+	author = params[:author]
 
 	if content.length <=0
 		@error = 'Type post text'
 		return erb :new
 	end
 	#Збереження даних в БД
-	@db.execute 'insert into Posts (content, created_date) values (?,datetime())', [content]
+	@db.execute 'insert into Posts (content, created_date, author) values (?,datetime(), ?)', [content, author]
 	redirect to '/'
 end
 
